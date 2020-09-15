@@ -6,7 +6,7 @@ from skimage import io, transform # 用于图像的IO和变换
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils, datasets
+from torchvision_learn import transforms, utils, datasets
 
 
 data_transform = transforms.Compose([

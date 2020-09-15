@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 import numpy as np
-import torchvision
-from torchvision import datasets, models, transforms
+import torchvision_learn
+from torchvision_learn import datasets, models, transforms
 import matplotlib.pyplot as plt
 import time
 import os
@@ -160,7 +160,7 @@ def visualize_model(model, num_images=6):
 ######################################################################
 ####################### 场景二：作为特征提取器 ##########################
 ######################################################################
-model_conv = torchvision.models.resnet18(pretrained=True)
+model_conv = torchvision_learn.models.resnet18(pretrained=True)
 for param in model_conv.parameters():
     param.requires_grad = False # Parameters of newly constructed modules have requires_grad=True by default
 
