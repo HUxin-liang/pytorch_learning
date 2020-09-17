@@ -1,11 +1,11 @@
-import torchvision
-from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
-from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+import torchvision_learn
+from torchvision_learn.models.detection.faster_rcnn import FastRCNNPredictor
+from torchvision_learn.models.detection.mask_rcnn import MaskRCNNPredictor
 import torch.nn as nn
 
 def get_model_instance_segmentation(num_classes):
     # 加载在coco上预训练好的实例分割模型
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+    model = torchvision_learn.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
 
     # 获得分类器的输入特征数
     in_feature = model.roi_heads.box_predictor.cls_score.in_features
@@ -62,8 +62,8 @@ def main():
     model = get_model_instance_segmentation(num_classes=num_classes)
 
     # cuda
-    model.cuda()
-    # model = nn.DataParallel(model)
+    # model.cuda()
+    model = nn.DataParallel(model, device_ids=[0,2])
 
     # 构建一个优化器
     params = [p for p in model.parameters() if p.requires_grad]

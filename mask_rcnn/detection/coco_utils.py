@@ -4,7 +4,7 @@ from PIL import Image
 
 import torch
 import torch.utils.data
-import torchvision
+import torchvision_learn
 
 from pycocotools import mask as coco_mask
 from pycocotools.coco import COCO
@@ -129,7 +129,7 @@ def _coco_remove_images_without_annotations(dataset, cat_list=None):
             return True
         return False
 
-    assert isinstance(dataset, torchvision.datasets.CocoDetection)
+    assert isinstance(dataset, torchvision_learn.datasets.CocoDetection)
     ids = []
     for ds_idx, img_id in enumerate(dataset.ids):
         ann_ids = dataset.coco.getAnnIds(imgIds=img_id, iscrowd=None)
@@ -197,16 +197,16 @@ def convert_to_coco_api(ds):
 
 def get_coco_api_from_dataset(dataset):
     for _ in range(10):
-        if isinstance(dataset, torchvision.datasets.CocoDetection):
+        if isinstance(dataset, torchvision_learn.datasets.CocoDetection):
             break
         if isinstance(dataset, torch.utils.data.Subset):
             dataset = dataset.dataset
-    if isinstance(dataset, torchvision.datasets.CocoDetection):
+    if isinstance(dataset, torchvision_learn.datasets.CocoDetection):
         return dataset.coco
     return convert_to_coco_api(dataset)
 
 
-class CocoDetection(torchvision.datasets.CocoDetection):
+class CocoDetection(torchvision_learn.datasets.CocoDetection):
     def __init__(self, img_folder, ann_file, transforms):
         super(CocoDetection, self).__init__(img_folder, ann_file)
         self._transforms = transforms

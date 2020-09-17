@@ -2,11 +2,11 @@
 ###################### 场景1 微调已经预训练的模型 ################################
 ###############################################################################
 # 我们想要预训练好的模型，只微调最后一层
-import torchvision
-from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+import torchvision_learn
+from torchvision_learn.models.detection.faster_rcnn import FastRCNNPredictor
 
 # 在COCO上加载经过预训练的模型
-model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+model = torchvision_learn.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
 
 # 将分类器替换为用户定义的num_classes的新分类器
 num_classes = 2 # 1 class(person) + backgroud
@@ -48,7 +48,7 @@ anchor_generotor = AnchorGenerator(sizes=((32, 64, 128, 256, 512),),
 # 更一般地，主干应该返回OrderedDict[Tensor]
 # 并且在featmap_names中，你可以选择要使用的功能映射
 roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=[0],
-                                                output_size=7,
-                                                sampling_ratio=2)
+                                                      output_size=7,
+                                                      sampling_ratio=2)
 # 将这些pieces放在fasterrcnn模型中
 model = FasterRCNN(backbone, num_classes=2, rpn_anchor_generator=anchor_generotor, box_roi_pool=roi_pooler)

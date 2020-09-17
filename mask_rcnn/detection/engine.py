@@ -3,7 +3,7 @@ import sys
 import time
 import torch
 
-import torchvision.models.detection.mask_rcnn
+import torchvision_learn.models.detection.mask_rcnn
 
 from mask_rcnn.detection.coco_utils import get_coco_api_from_dataset
 from mask_rcnn.detection.coco_eval import CocoEvaluator
@@ -60,9 +60,9 @@ def _get_iou_types(model):
     if isinstance(model, torch.nn.parallel.DistributedDataParallel):
         model_without_ddp = model.module
     iou_types = ["bbox"]
-    if isinstance(model_without_ddp, torchvision.models.detection.MaskRCNN):
+    if isinstance(model_without_ddp, torchvision_learn.models.detection.MaskRCNN):
         iou_types.append("segm")
-    if isinstance(model_without_ddp, torchvision.models.detection.KeypointRCNN):
+    if isinstance(model_without_ddp, torchvision_learn.models.detection.KeypointRCNN):
         iou_types.append("keypoints")
     return iou_types
 
